@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import me.henriquesouza.mcuml.domain.Categoria;
 import me.henriquesouza.mcuml.domain.Cidade;
+import me.henriquesouza.mcuml.domain.Cliente;
+import me.henriquesouza.mcuml.domain.Endereco;
 import me.henriquesouza.mcuml.domain.Estado;
 import me.henriquesouza.mcuml.domain.Produto;
+import me.henriquesouza.mcuml.domain.enums.TipoCliente;
 import me.henriquesouza.mcuml.repositories.CategoriaRepository;
 import me.henriquesouza.mcuml.repositories.CidadeRepository;
+import me.henriquesouza.mcuml.repositories.ClienteRepository;
+import me.henriquesouza.mcuml.repositories.EnderecoRepository;
 import me.henriquesouza.mcuml.repositories.EstadoRepository;
 import me.henriquesouza.mcuml.repositories.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class McUmlApplication implements CommandLineRunner {
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(McUmlApplication.class, args);
@@ -64,6 +73,18 @@ public class McUmlApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "98765432122", TipoCliente.PESSOAFISICA);
+		// adiciona telefones ao cliente
+		cli1.getTelefones().addAll(Arrays.asList("44999997777", "44988887766"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "78250000", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "87509000", cli1, c2);
+	
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 	}
 
 }
