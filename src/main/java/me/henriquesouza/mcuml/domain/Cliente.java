@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import me.henriquesouza.mcuml.domain.enums.TipoCliente;
 
 @Entity
@@ -30,8 +32,10 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 
 	// associacao com Endereco
+	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
+	
 	// associacao com entidade fraca Telefone
 	// criado uma coleção pois tem somente 01 atributo
 	@ElementCollection
