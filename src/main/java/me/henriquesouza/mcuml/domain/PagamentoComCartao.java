@@ -1,7 +1,10 @@
 package me.henriquesouza.mcuml.domain;
 
+import javax.persistence.Entity;
+
 import me.henriquesouza.mcuml.domain.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComCartao extends Pagamento {
 	// subclasse não precisa implementar Serializable
 	private static final long serialVersionUID = 1L;

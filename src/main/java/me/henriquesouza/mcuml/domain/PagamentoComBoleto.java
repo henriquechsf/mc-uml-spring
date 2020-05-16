@@ -2,8 +2,11 @@ package me.henriquesouza.mcuml.domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import me.henriquesouza.mcuml.domain.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComBoleto extends Pagamento {
 	// subclasse não precisa implementar Serializable
 	private static final long serialVersionUID = 1L;
