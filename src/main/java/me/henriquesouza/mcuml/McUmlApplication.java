@@ -13,6 +13,7 @@ import me.henriquesouza.mcuml.domain.Cidade;
 import me.henriquesouza.mcuml.domain.Cliente;
 import me.henriquesouza.mcuml.domain.Endereco;
 import me.henriquesouza.mcuml.domain.Estado;
+import me.henriquesouza.mcuml.domain.ItemPedido;
 import me.henriquesouza.mcuml.domain.Pagamento;
 import me.henriquesouza.mcuml.domain.PagamentoComBoleto;
 import me.henriquesouza.mcuml.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import me.henriquesouza.mcuml.repositories.CidadeRepository;
 import me.henriquesouza.mcuml.repositories.ClienteRepository;
 import me.henriquesouza.mcuml.repositories.EnderecoRepository;
 import me.henriquesouza.mcuml.repositories.EstadoRepository;
+import me.henriquesouza.mcuml.repositories.ItemPedidoRepository;
 import me.henriquesouza.mcuml.repositories.PagamentoRepository;
 import me.henriquesouza.mcuml.repositories.PedidoRepository;
 import me.henriquesouza.mcuml.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class McUmlApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(McUmlApplication.class, args);
@@ -114,6 +118,18 @@ public class McUmlApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }
